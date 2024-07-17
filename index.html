@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Horas</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mt-5">Banco de Horas</h2>
+                <form id="horasForm">
+                    <div class="form-group">
+                        <label for="inputHoras">Horas:</label>
+                        <input type="number" class="form-control" id="inputHoras" placeholder="Digite suas horas">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMinutos">Minutos:</label>
+                        <input type="number" class="form-control" id="inputMinutos" placeholder="Digite seus minutos">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="checkPositivo">
+                        <label class="form-check-label" for="checkPositivo">Horas Positivas</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Enviar</button>
+                </form>
+                <div id="resultado" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('horasForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const horas = parseInt(document.getElementById('inputHoras').value);
+            const minutos = parseInt(document.getElementById('inputMinutos').value);
+            const positivo = document.getElementById('checkPositivo').checked;
+            const resultado = document.getElementById('resultado');
+
+            let status = positivo ? 'positivas' : 'negativas';
+            resultado.innerHTML = <p>Você informou ${horas} horas e ${minutos} minutos. Suas horas são ${status}.</p>;
+
+            const saldoEmMinutos = (positivo ? 1 : -1) * (horas * 60 + minutos);
+            const jornadaDiariaEmMinutos = 9 * 60;  // Jornada de 9 horas = 540 minutos
+            const pontoEntrada = 8 * 60;  // Horário de entrada: 08:00 = 480 minutos
+            const pontoSaida = pontoEntrada + jornadaDiariaEmMinutos;
+
+            const novoPontoSaida = pontoSaida - saldoEmMinutos;
+            const horasSaida = Math.floor(novoPontoSaida / 60);
+            const minutosSaida = novoPontoSaida % 60;
+
+            resultado.innerHTML += <p>Para compensar as horas, você deve bater o ponto no próximo dia às 08:00 e sair às ${horasSaida.toString().padStart(2, '0')}:${minutosSaida.toString().padStart(2, '0')}.</p>;
+        });
+    </script>
+</body>
+</html>
