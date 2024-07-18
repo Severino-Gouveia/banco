@@ -52,14 +52,14 @@
             const resultado = document.getElementById('resultado');
 
             let status = positivo ? 'positivas' : 'negativas';
-            resultado.innerHTML = <p>Você informou ${horas} horas e ${minutos} minutos. Suas horas são ${status}.</p>;
+            resultado.innerHTML = `<p>Você informou ${horas} horas e ${minutos} minutos. Suas horas são ${status}.</p>`;
 
             const saldoEmMinutos = (positivo ? 1 : -1) * (horas * 60 + minutos);
             const limiteMinutos = 2 * 60; // Limite de 2 horas = 120 minutos
 
             if (Math.abs(saldoEmMinutos) > limiteMinutos) {
                 const excessoMinutos = Math.abs(saldoEmMinutos) - limiteMinutos;
-                resultado.innerHTML += <p>Você excedeu o limite de 2 horas. Exemplo com 2 horas:</p>;
+                resultado.innerHTML += `<p>Você excedeu o limite de 2 horas. Exemplo com 2 horas:</p>`;
 
                 const jornadaDiariaEmMinutos = 9 * 60;  // Jornada de 9 horas = 540 minutos
 
@@ -79,15 +79,15 @@
                     novoPontoEntrada = pontoEntrada - (positivo ? 120 : -120);
                     const horasEntrada = Math.floor(novoPontoEntrada / 60);
                     const minutosEntrada = novoPontoEntrada % 60;
-                    resultado.innerHTML += <p>Para compensar 2 horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>;
+                    resultado.innerHTML += `<p>Para compensar 2 horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>`;
                 } else {
                     novoPontoSaida = pontoSaida - (positivo ? 120 : -120);
                     const horasSaida = Math.floor(novoPontoSaida / 60);
                     const minutosSaida = novoPontoSaida % 60;
-                    resultado.innerHTML += <p>Para compensar 2 horas, você deve bater o ponto no próximo dia às ${turnoManha ? '05:30' : '08:00'} e sair às ${horasSaida.toString().padStart(2, '0')}:${minutosSaida.toString().padStart(2, '0')}.</p>;
+                    resultado.innerHTML += `<p>Para compensar 2 horas, você deve bater o ponto no próximo dia às ${turnoManha ? '05:30' : '08:00'} e sair às ${horasSaida.toString().padStart(2, '0')}:${minutosSaida.toString().padStart(2, '0')}.</p>`;
                 }
 
-                resultado.innerHTML += <p>Você precisa pagar ${Math.floor(excessoMinutos / 60)} horas e ${excessoMinutos % 60} minutos a mais.</p>;
+                resultado.innerHTML += `<p>Você precisa pagar ${Math.floor(excessoMinutos / 60)} horas e ${excessoMinutos % 60} minutos a mais.</p>`;
                 return;
             }
 
@@ -107,12 +107,12 @@
                 const novoPontoEntrada = pontoEntrada - saldoEmMinutos;
                 const horasEntrada = Math.floor(novoPontoEntrada / 60);
                 const minutosEntrada = novoPontoEntrada % 60;
-                resultado.innerHTML += <p>Para compensar as horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>;
+                resultado.innerHTML += `<p>Para compensar as horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>`;
             } else {
                 const novoPontoSaida = pontoSaida - saldoEmMinutos;
                 const horasSaida = Math.floor(novoPontoSaida / 60);
                 const minutosSaida = novoPontoSaida % 60;
-                resultado.innerHTML += <p>Para compensar as horas, você deve bater o ponto no próximo dia às ${turnoManha ? '05:30' : '08:00'} e sair às ${horasSaida.toString().padStart(2, '0')}:${minutosSaida.toString().padStart(2, '0')}.</p>;
+                resultado.innerHTML += `<p>Para compensar as horas, você deve bater o ponto no próximo dia às ${turnoManha ? '05:30' : '08:00'} e sair às ${horasSaida.toString().padStart(2, '0')}:${minutosSaida.toString().padStart(2, '0')}.</p>`;
             }
         });
     </script>
