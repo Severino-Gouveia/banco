@@ -55,9 +55,9 @@
             resultado.innerHTML = `<p>Você informou ${horas} horas e ${minutos} minutos. Suas horas são ${status}.</p>`;
 
             const saldoEmMinutos = (positivo ? 1 : -1) * (horas * 60 + minutos);
-            const limiteMinutos = 2 * 60; // Limite de 2 horas = 120 minutos
+            const limiteMinutos = positivo ? Infinity : 2 * 60; // Sem limite se positivo, caso contrário 2 horas = 120 minutos
 
-            if (Math.abs(saldoEmMinutos) > limiteMinutos) {
+            if (!positivo && Math.abs(saldoEmMinutos) > limiteMinutos) {
                 const excessoMinutos = Math.abs(saldoEmMinutos) - limiteMinutos;
                 resultado.innerHTML += `<p>Você excedeu o limite de 2 horas. Exemplo com 2 horas:</p>`;
 
@@ -76,7 +76,7 @@
                 let novoPontoEntrada, novoPontoSaida;
 
                 if (compensarNaEntrada) {
-                    novoPontoEntrada = pontoEntrada - (positivo ? 120 : -120);
+                    novoPontoEntrada = pontoEntrada + (positivo ? 120 : -120);
                     const horasEntrada = Math.floor(novoPontoEntrada / 60);
                     const minutosEntrada = novoPontoEntrada % 60;
                     resultado.innerHTML += `<p>Para compensar 2 horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>`;
@@ -104,7 +104,7 @@
             }
 
             if (compensarNaEntrada) {
-                const novoPontoEntrada = pontoEntrada - saldoEmMinutos;
+                const novoPontoEntrada = pontoEntrada + saldoEmMinutos;
                 const horasEntrada = Math.floor(novoPontoEntrada / 60);
                 const minutosEntrada = novoPontoEntrada % 60;
                 resultado.innerHTML += `<p>Para compensar as horas, você deve bater o ponto no próximo dia às ${horasEntrada.toString().padStart(2, '0')}:${minutosEntrada.toString().padStart(2, '0')} e sair às ${turnoManha ? '14:30' : '17:00'}.</p>`;
@@ -118,3 +118,4 @@
     </script>
 </body>
 </html>
+
